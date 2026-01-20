@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>demo</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1 class="d-flex flex-row justify-content-center gap-4">
+      <span>Score: <span id="score">0</span></span>
+      <span>Passed: <span id="passed">false</span></span>
+    </h1>
+    <div class="container">
+      
+      <form>
+        <div class="row">
+          <div class="col-3 p-2">
+            Stärken / Schwächen
+          </div>
+          <div class="col-3 p-2 text-center">
+            <input type="checkbox" class="form-check-input" id="q-0-0">
+            <label class="form-check-label visually-hidden" for="q-0-0">Q001</label>
+          </div>
+          <div class="col-3 p-2 text-center">
+            <input type="checkbox" class="form-check-input" id="q-0-1">
+            <label class="form-check-label visually-hidden" for="q-0-1">Q002</label>
+          </div>
+          <div class="col-3 p-2 text-center">
+            <input type="checkbox" class="form-check-input" id="q-0-2">
+            <label class="form-check-label visually-hidden" for="q-0-2">Q003</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3 p-2">
+            Selbst- / Fremdbild
+          </div>
+          <div class="col-3 p-2 text-center">
+            <input type="checkbox" class="form-check-input" id="q-1-0">
+            <label class="form-check-label visually-hidden" for="q-1-0">Q100</label>
+          </div>
+          <div class="col-3 p-2 text-center">
+            <input type="checkbox" class="form-check-input" id="q-1-1">
+              <label class="form-check-label visually-hidden" for="q-1-1">Q101</label>
+          </div>
+          <div class="col-3 p-2 text-center">
+            <input type="checkbox" class="form-check-input" id="q-1-2">
+            <label class="form-check-label visually-hidden" for="q-1-2">Q102</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3 p-2">
+            Grenzen / Belastbarkeit
+          </div>
+          <div class="col-3 p-2 text-center">
+            <input type="checkbox" class="form-check-input" id="q-2-0">
+            <label class="form-check-label visually-hidden" for="q-2-0">Q200</label>
+          </div>
+          <div class="col-3 p-2 text-center">
+            <input type="checkbox" class="form-check-input" id="q-2-1">
+            <label class="form-check-label visually-hidden" for="q-2-1">Q201</label>
+          </div>
+          <div class="col-3 p-2 text-center">
+            <input type="checkbox" class="form-check-input" id="q-2-2">
+            <label class="form-check-label visually-hidden" for="q-2-2">Q202</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3 p-2">
+            Umgang / Frustration
+          </div>
+          <div class="col-3 p-2 text-center">
+            <input type="checkbox" class="form-check-input" id="q-3-0">
+            <label class="form-check-label visually-hidden" for="q-3-0">Q300</label>
+          </div>
+          <div class="col-3 p-2 text-center">
+            <input type="checkbox" class="form-check-input" id="q-3-1">
+            <label class="form-check-label visually-hidden" for="q-3-1">Q301</label>
+          </div>
+          <div class="col-3 p-2 text-center">
+            <input type="checkbox" class="form-check-input" id="q-3-2">
+            <label class="form-check-label visually-hidden" for="q-3-2">Q302</label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
