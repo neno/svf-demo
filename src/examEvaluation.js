@@ -1,4 +1,5 @@
 const checkboxMatrix = [];
+let minScoreToPass = 3;
 
 const examProps = {
   score: 0,
@@ -36,7 +37,8 @@ function evaluateExam() {
       exam.score+=1;
     }
   }
-  exam.passed = exam.score >= 3;
+  
+  exam.passed = exam.score >= minScoreToPass;
   console.log(`score: ${exam.score} passed: ${exam.passed}`);
 }
 
@@ -59,7 +61,8 @@ function initcheckboxes(checkboxes) {
   console.log(`checkboxMatrix: ${checkboxMatrix}`);
 }
 
-function setupExamEvaluation(checkboxesSelector, scoreIdSelector, passedIdSelector) {
+function setupExamEvaluation(checkboxesSelector, _minScore) {
+  minScoreToPass = _minScore;
   const checkboxes = document.querySelectorAll(checkboxesSelector);
   console.log(`checkboxes: ${checkboxes.length}`);
   initcheckboxes(checkboxes);

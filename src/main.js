@@ -3,7 +3,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import { setupExamEvaluation, exam, subscribeExam } from './examEvaluation.js';
 
-setupExamEvaluation('#app input[type="checkbox"]', 'score', 'passed');
+setupExamEvaluation('#app input[type="checkbox"]', 3);
 
 // get DOM elements for displaying exam state
 const scoreElement = document.getElementById('score');
