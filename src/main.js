@@ -22,36 +22,3 @@ subscribeExam((key, value, state) => {
     passedElement.textContent = state.passed;
   }
 });
-
-
-
-
-
-// import { setupCheckboxMatrix } from './checkboxMatrix.js';
-
-// setupCheckboxMatrix('#app input[type="checkbox"]');
-
-// let checkboxMatrix = [];
-
-// function updateCheckboxMatrix(checkboxId, checked) {
-//   const [row, col] = checkboxId.split('-').filter(item => !isNaN(item)).map(Number);
-//   checkboxMatrix[row][col] = checked;
-//   console.log(checkboxMatrix);
-// }
-
-// function initCheckboxes(checkboxes) {
-//   checkboxes.forEach((checkbox, index) => {
-//     checkbox.addEventListener('change', () => {
-//       updateCheckboxMatrix(checkbox.id, checkbox.checked);
-//     });
-    
-//     if ((index + 1) % 3 === 0) {
-//       checkboxMatrix.push([false, false, false]);
-//     }
-//   });
-// }
-
-
-// const checkboxes = document.querySelectorAll('#app input[type="checkbox"]');
-// initCheckboxes(checkboxes);
-// console.log(checkboxMatrix);
