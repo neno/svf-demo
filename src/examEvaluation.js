@@ -1,12 +1,17 @@
 const checkboxMatrix = [];
 
-let scoreElement = null;
-let passedElement = null;
-
 const examProps = {
   score: 0,
   passed: false,
 };
+
+// listeners that get notified whenever a property on exam changes
+const examListeners = new Set();
+
+function subscribeExam(listener) {
+  examListeners.add(listener);
+  return () => examListeners.delete(listener);
+}
 
 // turn examProps into reactive elements with a proxy object
 const exam = new Proxy(examProps, {
@@ -16,17 +21,8 @@ const exam = new Proxy(examProps, {
   set(target, key, value) {
     target[key] = value;
 
-    if (key === 'score') {
-      if (scoreElement) {
-        scoreElement.textContent = value;
-      }
-    }
-
-    if (key === 'passed') {
-      if (passedElement) {
-        passedElement.textContent = value;
-      }
-    }
+    // notify all subscribers (e.g. main.js) about the change
+    examListeners.forEach(listener => listener(key, value, { ...target }));
 
     return true;
   },
@@ -65,10 +61,8 @@ function initcheckboxes(checkboxes) {
 
 function setupExamEvaluation(checkboxesSelector, scoreIdSelector, passedIdSelector) {
   const checkboxes = document.querySelectorAll(checkboxesSelector);
-  scoreElement = document.getElementById(scoreIdSelector);
-  passedElement = document.getElementById(passedIdSelector);
   console.log(`checkboxes: ${checkboxes.length}`);
   initcheckboxes(checkboxes);
 }
 
-export { setupExamEvaluation, exam };
+export { setupExamEvaluation, exam, subscribeExam };
