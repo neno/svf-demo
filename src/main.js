@@ -2,8 +2,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import { setupExamEvaluation, exam, subscribeExam } from './examEvaluation.js';
+const checkboxes = document.querySelectorAll('#app input[type="checkbox"]');
 
-setupExamEvaluation('#app input[type="checkbox"]', 3);
+setupExamEvaluation(checkboxes, 3);
 
 // get DOM elements for displaying exam state
 const scoreElement = document.getElementById('score');

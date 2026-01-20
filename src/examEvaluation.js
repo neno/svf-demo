@@ -61,9 +61,8 @@ function initcheckboxes(checkboxes) {
   console.log(`checkboxMatrix: ${checkboxMatrix}`);
 }
 
-function setupExamEvaluation(checkboxesSelector, _minScore) {
+function setupExamEvaluation(checkboxes, _minScore) {
   minScoreToPass = _minScore;
-  const checkboxes = document.querySelectorAll(checkboxesSelector);
   console.log(`checkboxes: ${checkboxes.length}`);
   initcheckboxes(checkboxes);
 }
