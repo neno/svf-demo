@@ -4,7 +4,7 @@ import { exam, subscribeExam } from './evaluateExam.js';
 describe('examEvaluation exam state', () => {
   beforeEach(() => {
     exam.score = 0;
-    exam.passed = false;
+    exam.result = "default";
   });
 
   it('notifies subscribers when score changes', () => {
@@ -23,18 +23,18 @@ describe('examEvaluation exam state', () => {
     unsubscribe();
   });
 
-  it('notifies subscribers when passed changes', () => {
+  it('notifies subscribers when result changes', () => {
     const events = [];
     const unsubscribe = subscribeExam((key, value, state) => {
       events.push({ key, value, state });
     });
 
-    exam.passed = true;
+    exam.result = "passed";
 
     expect(events).toHaveLength(1);
-    expect(events[0].key).toBe('passed');
-    expect(events[0].value).toBe(true);
-    expect(events[0].state.passed).toBe(true);
+    expect(events[0].key).toBe('result');
+    expect(events[0].value).toBe("passed");
+    expect(events[0].state.result).toBe("passed");
 
     unsubscribe();
   });

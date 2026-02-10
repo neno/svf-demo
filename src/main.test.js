@@ -8,7 +8,7 @@ describe('main.js DOM integration', () => {
       <div id="app">
         <h1>
           <span>Score: <span id="score">0</span></span>
-          <span>Passed: <span id="passed">false</span></span>
+          <span>Result: <span id="result">default</span></span>
         </h1>
         <form>
           <input type="checkbox" id="q-0-0">
@@ -24,18 +24,18 @@ describe('main.js DOM integration', () => {
 
   it('updates DOM when exam changes', () => {
     const scoreElement = document.getElementById('score');
-    const passedElement = document.getElementById('passed');
+    const resultElement = document.getElementById('result');
 
     // initial state from main.js
     expect(scoreElement.textContent).toBe(String(exam.score));
-    expect(passedElement.textContent).toBe(String(exam.passed));
+    expect(resultElement.textContent).toBe(String(exam.result));
 
     // change exam via proxy – should trigger subscription in main.js
     exam.score = 3;
-    exam.passed = true;
+    exam.result = "passed";
 
     expect(scoreElement.textContent).toBe('3');
-    expect(passedElement.textContent).toBe('true');
+    expect(resultElement.textContent).toBe('passed');
   });
 });
 

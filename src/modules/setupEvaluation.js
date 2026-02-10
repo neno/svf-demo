@@ -4,8 +4,7 @@ import { setupExamEvaluation, exam, subscribeExam } from './evaluateExam.js';
 
 let iconIdPrefix;
 let scoreElement;
-let passedElement;
-let failedElement;
+let resultElement;
 
 // update the row status <i> elements based on rowStatuses array
 function updateRowStatuses(rowStatuses) {
@@ -30,11 +29,8 @@ subscribeExam((key, value, state) => {
   if (key === 'score' && scoreElement) {
     scoreElement.textContent = state.score;
   }
-  if (key === 'passed' && passedElement) {
-    passedElement.textContent = state.passed;
-  }
-  if (key === 'failed' && failedElement) {
-    failedElement.textContent = state.failed;
+  if (key === 'result' && resultElement) {
+    resultElement.textContent = state.result;
   }
   if (key === 'rowStatuses') {
     updateRowStatuses(value);
@@ -42,17 +38,15 @@ subscribeExam((key, value, state) => {
 });
 
 
-function setupEvaluation(radioButtons, minScore, scoreEl, passedEl, failedEl, iconPrefix) {
+function setupEvaluation(radioButtons, minScore, scoreEl, resultEl, iconPrefix) {
   iconIdPrefix = iconPrefix;
   setupExamEvaluation(radioButtons, minScore);
   scoreElement = scoreEl;
-  passedElement = passedEl;
-  failedElement = failedEl;
+  resultElement = resultEl;
   
   // set initial values
   if (scoreElement) scoreElement.textContent = exam.score;
-  if (passedElement) passedElement.textContent = exam.passed;
-  if (failedElement) failedElement.textContent = exam.failed;
+  if (resultElement) resultElement.textContent = exam.result;
 
 
   // listen for changes to exam and update DOM from here

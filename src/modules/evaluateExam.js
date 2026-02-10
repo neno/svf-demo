@@ -3,8 +3,7 @@ let minScoreToPass = 3;
 
 const examProps = {
   score: 0,
-  passed: false,
-  failed: false,
+  result: "default", // "default", "passed", "failed"
   rowStatuses: [], // "failed", "default", or "passed" per row
 };
 
@@ -31,7 +30,7 @@ const exam = new Proxy(examProps, {
   },
 });
 
-// evaluate each row's status and compute overall score/passed/failed
+// evaluate each row's status and compute overall result
 function evaluateExam() {
   exam.score = 0;
   let hasFailed = false;
@@ -51,10 +50,15 @@ function evaluateExam() {
     }
   }
 
-  exam.passed = exam.score >= minScoreToPass;
-  exam.failed = hasFailed;
+  if (exam.score >= minScoreToPass) {
+    exam.result = "passed";
+  } else if (hasFailed) {
+    exam.result = "failed";
+  } else {
+    exam.result = "default";
+  }
   exam.rowStatuses = statuses;
-  console.log(`score: ${exam.score} passed: ${exam.passed} failed: ${exam.failed} rowStatuses: ${JSON.stringify(statuses)}`);
+  console.log(`score: ${exam.score} result: ${exam.result} rowStatuses: ${JSON.stringify(statuses)}`);
 }
 
 function updateDecisionMatrix(radioId, value) {
