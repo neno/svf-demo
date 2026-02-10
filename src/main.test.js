@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { exam } from './examEvaluation.js';
+import { exam } from './modules/evaluateExam.js';
 
 describe('main.js DOM integration', () => {
   beforeEach(async () => {

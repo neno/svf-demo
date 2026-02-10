@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { exam, subscribeExam } from './examEvaluation.js';
+import { exam, subscribeExam } from './evaluateExam.js';
 
 describe('examEvaluation exam state', () => {
   beforeEach(() => {
