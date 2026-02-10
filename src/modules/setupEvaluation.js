@@ -2,12 +2,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { setupExamEvaluation, exam, subscribeExam } from './evaluateExam.js';
 
-let iconIdPrefix;
-let scoreElement;
-let resultElement;
-
 // update the row status <i> elements based on rowStatuses array
-function updateRowStatuses(rowStatuses) {
+function updateRowStatuses(rowStatuses, iconIdPrefix) {
   rowStatuses.forEach((status, index) => {
     const rowNum = index + 1; // starts at 1
     
@@ -24,11 +20,8 @@ function updateRowStatuses(rowStatuses) {
   });
 }
 
-function setupEvaluation(radioButtons, minScore, scoreEl, resultEl, iconPrefix) {
-  iconIdPrefix = iconPrefix;
+function setupEvaluation(radioButtons, minScore, scoreElement, resultElement, iconIdPrefix) {
   setupExamEvaluation(radioButtons, minScore);
-  scoreElement = scoreEl;
-  resultElement = resultEl;
   
   // set initial values
   if (scoreElement) scoreElement.textContent = exam.score;
@@ -43,7 +36,7 @@ function setupEvaluation(radioButtons, minScore, scoreEl, resultEl, iconPrefix) 
       resultElement.textContent = state.result;
     }
     if (key === 'rowStatuses') {
-      updateRowStatuses(value);
+      updateRowStatuses(value, iconIdPrefix);
     }
   });
 }
