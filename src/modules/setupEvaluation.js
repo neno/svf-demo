@@ -24,20 +24,6 @@ function updateRowStatuses(rowStatuses) {
   });
 }
 
-// listen for changes to exam and update DOM from here
-subscribeExam((key, value, state) => {
-  if (key === 'score' && scoreElement) {
-    scoreElement.textContent = state.score;
-  }
-  if (key === 'result' && resultElement) {
-    resultElement.textContent = state.result;
-  }
-  if (key === 'rowStatuses') {
-    updateRowStatuses(value);
-  }
-});
-
-
 function setupEvaluation(radioButtons, minScore, scoreEl, resultEl, iconPrefix) {
   iconIdPrefix = iconPrefix;
   setupExamEvaluation(radioButtons, minScore);
@@ -48,11 +34,16 @@ function setupEvaluation(radioButtons, minScore, scoreEl, resultEl, iconPrefix) 
   if (scoreElement) scoreElement.textContent = exam.score;
   if (resultElement) resultElement.textContent = exam.result;
 
-
   // listen for changes to exam and update DOM from here
   subscribeExam((key, value, state) => {
     if (key === 'score' && scoreElement) {
       scoreElement.textContent = state.score;
+    }
+    if (key === 'result' && resultElement) {
+      resultElement.textContent = state.result;
+    }
+    if (key === 'rowStatuses') {
+      updateRowStatuses(value);
     }
   });
 }
