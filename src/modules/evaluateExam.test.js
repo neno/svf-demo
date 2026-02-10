@@ -38,5 +38,4 @@ describe('examEvaluation exam state', () => {
 
     unsubscribe();
   });
-}
-
+});
