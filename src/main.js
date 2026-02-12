@@ -14,10 +14,10 @@ const resultInputEl = document.getElementById('decision-form-status')
 const submitButtonEl = document.getElementById('saveBtn')
 const failedExplanationTextareaEl = document.getElementById('decision-form-reason')
 
-setupEvaluation(
+setupEvaluation({
    radioButtons,
-   3,
-   scoreEl,
+   minScore: 3,
+   scoreElement: scoreEl,
    resultDefaultEl,
    resultPassedEl,
    resultFailedEl,
@@ -25,5 +25,5 @@ setupEvaluation(
    resultFailedExplanationEl,
    submitButtonEl,
    failedExplanationTextareaEl,
-   'decision'
-)
+   iconIdPrefix: 'decision',
+})

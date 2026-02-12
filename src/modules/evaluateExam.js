@@ -32,23 +32,25 @@ const exam = new Proxy(examProps, {
 
 // evaluate each row's status and compute overall result
 function evaluateExam() {
-   exam.score = 0
+   let score = 0
    let hasFailed = false
    const statuses = []
 
    for (let row = 0; row < decisionMatrix.length; row++) {
-      if (decisionMatrix[row].some(col => col === 2)) {
-         // any column failed → row is failed
+      if (decisionMatrix[row].every(col => col === 2)) {
+         // every column failed → row is failed
          statuses.push('failed')
          hasFailed = true
       } else if (decisionMatrix[row].every(col => col === 1)) {
          // all columns passed → row is passed
          statuses.push('passed')
-         exam.score += 1
+         score += 1
       } else {
          statuses.push('default')
       }
    }
+
+   exam.score = score
 
    if (exam.score >= minScoreToPass) {
       exam.result = 'passed'

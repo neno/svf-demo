@@ -22,25 +22,14 @@ function updateRowStatuses(rowStatuses, iconIdPrefix) {
 
 
 function updateResultStatuses(result, resultDefaultEl, resultPassedEl, resultFailedEl, resultInputEl, resultFailedExplanationEl) {
-   if (result === 'passed') {
-      if (resultPassedEl) resultPassedEl.classList.remove('d-none') // show passed button
-      if (resultDefaultEl) resultDefaultEl.classList.add('d-none') // hide default paragraph
-      if (resultFailedEl) resultFailedEl.classList.add('d-none') // hide failed button
-      if (resultFailedExplanationEl) resultFailedExplanationEl.classList.add('d-none') // hide failed explanation
-      if (resultInputEl) resultInputEl.value = 1 // set result input to 1
-   } else if (result === 'failed') {
-      if (resultPassedEl) resultPassedEl.classList.add('d-none') // hide passed button
-      if (resultDefaultEl) resultDefaultEl.classList.add('d-none') // hide default paragraph
-      if (resultFailedEl) resultFailedEl.classList.remove('d-none') // show failed button
-      if (resultFailedExplanationEl) resultFailedExplanationEl.classList.remove('d-none') // show failed explanation
-      if (resultInputEl) resultInputEl.value = 2 // set result input to 2
-   } else {
-      if (resultDefaultEl) resultDefaultEl.classList.remove('d-none') // show default paragraph
-      if (resultPassedEl) resultPassedEl.classList.add('d-none') // hide passed button
-      if (resultFailedEl) resultFailedEl.classList.add('d-none') // hide failed button
-      if (resultFailedExplanationEl) resultFailedExplanationEl.classList.add('d-none') // hide failed explanation
-      if (resultInputEl) resultInputEl.value = 0 // set result input to 0
-   }
+   const inputValueMap = { default: 0, passed: 1, failed: 2 }
+
+   resultDefaultEl?.classList.toggle('d-none', result !== 'default')
+   resultPassedEl?.classList.toggle('d-none', result !== 'passed')
+   resultFailedEl?.classList.toggle('d-none', result !== 'failed')
+   resultFailedExplanationEl?.classList.toggle('d-none', result !== 'failed')
+
+   if (resultInputEl) resultInputEl.value = inputValueMap[result] ?? 0
 }
 
 function isFailedExplanationValid(textareaEl) {
@@ -54,11 +43,6 @@ function setSubmitButtonState(submitButtonEl, result, failedExplanationTextareaE
 
    submitButtonEl.disabled = true
 
-   console.warn('result', result)
-
-   if (!result) {
-      submitButtonEl.disabled = false
-   }
    if (result === 'passed') {
       submitButtonEl.disabled = false
    }
@@ -67,7 +51,7 @@ function setSubmitButtonState(submitButtonEl, result, failedExplanationTextareaE
    }
 }
 
-function setupEvaluation(
+function setupEvaluation({
    radioButtons,
    minScore,
    scoreElement,
@@ -78,8 +62,8 @@ function setupEvaluation(
    resultFailedExplanationEl,
    submitButtonEl,
    failedExplanationTextareaEl,
-   iconIdPrefix
-) {
+   iconIdPrefix,
+}) {
    if (!resultInputEl) {
       return // if there is no result input element, the form does not have to be evaluated
    }
