@@ -18,7 +18,7 @@ if (form) {
    setupEvaluation({
       radioButtons,
       minScore: 3,
-      scoreElement: scoreEl,
+      scoreEl,
       resultPassedEl,
       resultFailedEl,
       resultInputEl,

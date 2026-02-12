@@ -54,7 +54,7 @@ function setSubmitButtonState(submitButtonEl, result, failedExplanationTextareaE
 function setupEvaluation({
    radioButtons,
    minScore,
-   scoreElement,
+   scoreEl,
    resultDefaultEl,
    resultPassedEl,
    resultFailedEl,
@@ -74,8 +74,8 @@ function setupEvaluation({
 
    // Subscribe FIRST so we receive events from the initial evaluation
    subscribeExam((key, value, state) => {
-      if (key === 'score' && scoreElement) {
-         scoreElement.textContent = state.score
+      if (key === 'score' && scoreEl) {
+         scoreEl.textContent = state.score
       }
       if (key === 'result' && resultInputEl) {
          updateResultStatuses(state.result, resultDefaultEl, resultPassedEl, resultFailedEl, resultInputEl, resultFailedExplanationEl)
