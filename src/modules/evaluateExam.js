@@ -1,106 +1,118 @@
-const decisionMatrix = [];
-let minScoreToPass = 3;
+const decisionMatrix = []
+let minScoreToPass = 3
 
 const examProps = {
-  score: 0,
-  result: "default", // "default", "passed", "failed"
-  rowStatuses: [], // "failed", "default", or "passed" per row
-};
+   score: 0,
+   result: 'default', // "default", "passed", "failed"
+   rowStatuses: [], // "failed", "default", or "passed" per row
+}
 
 // listeners that get notified whenever a property on exam changes
-const examListeners = new Set();
+const examListeners = new Set()
 
 function subscribeExam(listener) {
-  examListeners.add(listener);
-  return () => examListeners.delete(listener);
+   examListeners.add(listener)
+   return () => examListeners.delete(listener)
 }
 
 // turn examProps into reactive elements with a proxy object
 const exam = new Proxy(examProps, {
-  get(target, key) {
-    return target[key];
-  },
-  set(target, key, value) {
-    target[key] = value;
+   get(target, key) {
+      return target[key]
+   },
+   set(target, key, value) {
+      target[key] = value
 
-    // notify all subscribers (e.g. main.js) about the change
-    examListeners.forEach(listener => listener(key, value, { ...target }));
+      // notify all subscribers (e.g. main.js) about the change
+      examListeners.forEach(listener => listener(key, value, { ...target }))
 
-    return true;
-  },
-});
+      return true
+   },
+})
 
 // evaluate each row's status and compute overall result
 function evaluateExam() {
-  exam.score = 0;
-  let hasFailed = false;
-  const statuses = [];
+   exam.score = 0
+   let hasFailed = false
+   const statuses = []
 
-  for (let row = 0; row < decisionMatrix.length; row++) {
-    if (decisionMatrix[row].some(col => col === 2)) {
-      // any column failed → row is failed
-      statuses.push('failed');
-      hasFailed = true;
-    } else if (decisionMatrix[row].every(col => col === 1)) {
-      // all columns passed → row is passed
-      statuses.push('passed');
-      exam.score += 1;
-    } else {
-      statuses.push('default');
-    }
-  }
+   for (let row = 0; row < decisionMatrix.length; row++) {
+      if (decisionMatrix[row].some(col => col === 2)) {
+         // any column failed → row is failed
+         statuses.push('failed')
+         hasFailed = true
+      } else if (decisionMatrix[row].every(col => col === 1)) {
+         // all columns passed → row is passed
+         statuses.push('passed')
+         exam.score += 1
+      } else {
+         statuses.push('default')
+      }
+   }
 
-  if (exam.score >= minScoreToPass) {
-    exam.result = "passed";
-  } else if (hasFailed) {
-    exam.result = "failed";
-  } else {
-    exam.result = "default";
-  }
-  exam.rowStatuses = statuses;
-  console.log(`score: ${exam.score} result: ${exam.result} rowStatuses: ${JSON.stringify(statuses)}`);
+   if (exam.score >= minScoreToPass) {
+      exam.result = 'passed'
+   } else if (hasFailed) {
+      exam.result = 'failed'
+   } else {
+      exam.result = 'default'
+   }
+   exam.rowStatuses = statuses
+}
+
+// parse a radio ID and write the value into the matrix (no re-evaluation)
+function setMatrixEntry(radioId, value) {
+   // id format: decision-{row}-{col}-{state}
+   const parts = radioId.split('-')
+   const row = parseInt(parts[1]) - 1 // convert 1-indexed to 0-indexed
+   const colLetter = parts[2]
+   const colMap = { a: 0, b: 1, c: 2 }
+   const col = colMap[colLetter]
+
+   decisionMatrix[row][col] = parseInt(value)
 }
 
 function updateDecisionMatrix(radioId, value) {
-  // id format: decision-{row}-{col}-{state}
-  const parts = radioId.split('-');
-  const row = parseInt(parts[1]) - 1; // convert 1-indexed to 0-indexed
-  const colLetter = parts[2];
-  const colMap = { a: 0, b: 1, c: 2 };
-  const col = colMap[colLetter];
-
-  decisionMatrix[row][col] = parseInt(value);
-  evaluateExam();
+   setMatrixEntry(radioId, value)
+   evaluateExam()
 }
 
 function initRadioGroups(radioButtons) {
-  // determine matrix dimensions from radio IDs
-  let maxRow = 0;
-  radioButtons.forEach(radio => {
-    const parts = radio.id.split('-');
-    const row = parseInt(parts[1]);
-    if (row > maxRow) maxRow = row;
-  });
+   // determine matrix dimensions from radio IDs
+   let maxRow = 0
+   radioButtons.forEach(radio => {
+      const parts = radio.id.split('-')
+      const row = parseInt(parts[1])
+      if (row > maxRow) maxRow = row
+   })
 
-  // initialize matrix with default values (0)
-  for (let i = 0; i < maxRow; i++) {
-    decisionMatrix.push([0, 0, 0]);
-  }
+   // reset and initialize matrix with default values (0)
+   decisionMatrix.length = 0
+   for (let i = 0; i < maxRow; i++) {
+      decisionMatrix.push([0, 0, 0])
+   }
 
-  // attach change listeners
-  radioButtons.forEach(radio => {
-    radio.addEventListener('change', () => {
-      updateDecisionMatrix(radio.id, radio.value);
-    });
-  });
+   // read initial checked state of radio buttons into the matrix
+   radioButtons.forEach(radio => {
+      if (radio.checked) {
+         setMatrixEntry(radio.id, radio.value)
+      }
+   })
 
-  console.log(`decisionMatrix: ${JSON.stringify(decisionMatrix)}`);
+   // attach change listeners
+   radioButtons.forEach(radio => {
+      radio.addEventListener('change', () => {
+         updateDecisionMatrix(radio.id, radio.value)
+      })
+   })
+
+   // evaluate initial state so subscribers receive the computed values
+   evaluateExam()
 }
 
 function setupExamEvaluation(radioButtons, _minScore) {
-  minScoreToPass = _minScore;
-  console.log(`radioButtons: ${radioButtons.length}`);
-  initRadioGroups(radioButtons);
+   minScoreToPass = _minScore
+   initRadioGroups(radioButtons) // reads checked radios, populates matrix, evaluates
 }
 
-export { setupExamEvaluation, exam, subscribeExam };
+export { setupExamEvaluation, subscribeExam }

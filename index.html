@@ -4,195 +4,646 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    .decision-toggle-item {
+      display: none;
+    }
+  </style>
   <title>demo</title>
 </head>
 
 <body>
   <div id="app">
     <h1 class="d-flex flex-row justify-content-center gap-4">
-      <span>Score: <span id="score">0</span></span>
-      <span>Result: <span id="result">default</span></span>
+      Kompetenznachweis
     </h1>
     <div class="container">
-      
       <form>
-        <div class="row">
-          <div class="col-3 p-2">
-            Stärken / Schwächen
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-1-a-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][1][a]" value="2" />
-            <input id="decision-1-a-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][1][a]" value="0" checked />
-            <input id="decision-1-a-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][1][a]" value="1" />
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-1-b-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][1][b]" value="2" />
-            <input id="decision-1-b-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][1][b]" value="0" checked />
-            <input id="decision-1-b-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][1][b]" value="1" />
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-1-c-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][1][c]" value="2" />
-            <input id="decision-1-c-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][1][c]" value="0" checked />
-            <input id="decision-1-c-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][1][c]" value="1" />
-          </div>
-          <div class="col-3 p-2 text-center">
-            <i id="decision-failed-1" style="display: none">failed</i>
-            <i id="decision-default-1">default</i>
-            <i id="decision-passed-1" style="display: none">passed</i>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-3 p-2">
-            Selbst- / Fremdbild
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-2-a-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][2][a]" value="2" />
-            <input id="decision-2-a-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][2][a]" value="0" checked />
-            <input id="decision-2-a-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][2][a]" value="1" />
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-2-b-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][2][b]" value="2" />
-            <input id="decision-2-b-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][2][b]" value="0" checked />
-            <input id="decision-2-b-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][2][b]" value="1" />
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-2-c-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][2][c]" value="2" />
-            <input id="decision-2-c-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][2][c]" value="0" checked />
-            <input id="decision-2-c-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][2][c]" value="1" />
-          </div>
-          <div class="col-3 p-2 text-center">
-            <i id="decision-failed-2" style="display: none">failed</i>
-            <i id="decision-default-2">default</i>
-            <i id="decision-passed-2" style="display: none">passed</i>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-3 p-2">
-            Grenzen / Belastbarkeit
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-3-a-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][3][a]" value="2" />
-            <input id="decision-3-a-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][3][a]" value="0" checked />
-            <input id="decision-3-a-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][3][a]" value="1" />
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-3-b-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][3][b]" value="2" />
-            <input id="decision-3-b-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][3][b]" value="0" checked />
-            <input id="decision-3-b-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][3][b]" value="1" />
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-3-c-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][3][c]" value="2" />
-            <input id="decision-3-c-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][3][c]" value="0" checked />
-            <input id="decision-3-c-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][3][c]" value="1" />
-          </div>
-          <div class="col-3 p-2 text-center">
-            <i id="decision-failed-3" style="display: none">failed</i>
-            <i id="decision-default-3">default</i>
-            <i id="decision-passed-3" style="display: none">passed</i>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-3 p-2">
-            Umgang / Frustration
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-4-a-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][4][a]" value="2" />
-            <input id="decision-4-a-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][4][a]" value="0" checked />
-            <input id="decision-4-a-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][4][a]" value="1" />
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-4-b-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][4][b]" value="2" />
-            <input id="decision-4-b-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][4][b]" value="0" checked />
-            <input id="decision-4-b-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][4][b]" value="1" />
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-4-c-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][4][c]" value="2" />
-            <input id="decision-4-c-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][4][c]" value="0" checked />
-            <input id="decision-4-c-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][4][c]" value="1" />
-          </div>
-          <div class="col-3 p-2 text-center">
-            <i id="decision-failed-4" style="display: none">failed</i>
-            <i id="decision-default-4">default</i>
-            <i id="decision-passed-4" style="display: none">passed</i>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-3 p-2">
-            Verhaltensmuster
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-5-a-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][5][a]" value="2" />
-            <input id="decision-5-a-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][5][a]" value="0" checked />
-            <input id="decision-5-a-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][5][a]" value="1" />
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-5-b-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][5][b]" value="2" />
-            <input id="decision-5-b-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][5][b]" value="0" checked />
-            <input id="decision-5-b-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][5][b]" value="1" />
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-5-c-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][5][c]" value="2" />
-            <input id="decision-5-c-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][5][c]" value="0" checked />
-            <input id="decision-5-c-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][5][c]" value="1" />
-          </div>
-          <div class="col-3 p-2 text-center">
-            <i id="decision-failed-5" style="display: none">failed</i>
-            <i id="decision-default-5">default</i>
-            <i id="decision-passed-5" style="display: none">passed</i>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-3 p-2">
-            Einistellungen / Werte
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-6-a-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][6][a]" value="2" />
-            <input id="decision-6-a-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][6][a]" value="0" checked />
-            <input id="decision-6-a-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][6][a]" value="1" />
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-6-b-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][6][b]" value="2" />
-            <input id="decision-6-b-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][6][b]" value="0" checked />
-            <input id="decision-6-b-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][6][b]" value="1" />
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-6-c-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][6][c]" value="2" />
-            <input id="decision-6-c-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][6][c]" value="0" checked />
-            <input id="decision-6-c-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][6][c]" value="1" />
-          </div>
-          <div class="col-3 p-2 text-center">
-            <i id="decision-failed-6" style="display: none">failed</i>
-            <i id="decision-default-6">default</i>
-            <i id="decision-passed-6" style="display: none">passed</i>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-3 p-2">
-            Entscheidungsverhalten
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-7-a-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][7][a]" value="2" />
-            <input id="decision-7-a-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][7][a]" value="0" checked />
-            <input id="decision-7-a-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][7][a]" value="1" />
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-7-b-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][7][b]" value="2" />
-            <input id="decision-7-b-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][7][b]" value="0" checked />
-            <input id="decision-7-b-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][7][b]" value="1" />
-          </div>
-          <div class="col-2 p-2 text-center">
-            <input id="decision-7-c-failed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][7][c]" value="2" />
-            <input id="decision-7-c-default" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][7][c]" value="0" checked />
-            <input id="decision-7-c-passed" type="radio" name="tx_svfasfctocco_evaluatereservation[decision-form][7][c]" value="1" />
-          </div>
-          <div class="col-3 p-2 text-center">
-            <i id="decision-failed-7" style="display: none">failed</i>
-            <i id="decision-default-7">default</i>
-            <i id="decision-passed-7" style="display: none">passed</i>
-          </div>
+        <div id="competence-matrix-disclosure" class="collapse show"
+          aria-labelledby="competence-matrix-disclosure-button">
+          <table id="competence-matrix-table" class="table competence-matrix-inactive">
+            <thead>
+              <tr>
+                <th></th>
+                <th>
+                  <div><strong>A</strong></div>
+                  <div>Grundverhalten</div>
+                </th>
+                <th>
+                  <div><strong>B</strong></div>
+                  <div>Reflexion</div>
+                </th>
+                <th>
+                  <div><strong>C</strong></div>
+                  <div>Ziel / Massnahmen</div>
+                </th>
+                <th>
+                  Interaktion
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="label">
+                  Stärken und Schwächen
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-a">
+                    <input id="decision-1-a-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][1][a]" value="2">
+                    <label for="decision-1-a-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-1-a-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][1][a]" value="0" checked="checked">
+                    <label for="decision-1-a-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-1-a-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][1][a]" value="1">
+                    <label for="decision-1-a-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-b">
+                    <input id="decision-1-b-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][1][b]" value="2">
+                    <label for="decision-1-b-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-1-b-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][1][b]" value="0" checked="checked">
+                    <label for="decision-1-b-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-1-b-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][1][b]" value="1">
+                    <label for="decision-1-b-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-c">
+                    <input id="decision-1-c-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][1][c]" value="2">
+                    <label for="decision-1-c-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-1-c-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][1][c]" value="0" checked="checked">
+                    <label for="decision-1-c-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-1-c-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][1][c]" value="1">
+                    <label for="decision-1-c-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="result">
+                  <div class="decision-status">
+
+                    <span id="decision-passed-1" class="status status-passed d-none">
+                      <i class="bi bi-check"></i>
+                    </span>
+                    <span id="decision-failed-1" class="status status-failed d-none">
+                      <i class="bi bi-x"></i>
+                    </span>
+                    <span id="decision-default-1" class="status status-default">
+                      <i class="bi bi-question"></i>
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="label">
+                  Selbst und Fremdbild
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-a">
+                    <input id="decision-2-a-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][2][a]" value="2">
+                    <label for="decision-2-a-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-2-a-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][2][a]" value="0" checked="checked">
+                    <label for="decision-2-a-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-2-a-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][2][a]" value="1">
+                    <label for="decision-2-a-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-b">
+                    <input id="decision-2-b-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][2][b]" value="2">
+                    <label for="decision-2-b-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-2-b-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][2][b]" value="0" checked="checked">
+                    <label for="decision-2-b-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-2-b-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][2][b]" value="1">
+                    <label for="decision-2-b-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-c">
+                    <input id="decision-2-c-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][2][c]" value="2">
+                    <label for="decision-2-c-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-2-c-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][2][c]" value="0" checked="checked">
+                    <label for="decision-2-c-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-2-c-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][2][c]" value="1">
+                    <label for="decision-2-c-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="result">
+                  <div class="decision-status">
+
+                    <span id="decision-passed-2" class="status status-passed d-none">
+                      <i class="bi bi-check"></i>
+                    </span>
+                    <span id="decision-failed-2" class="status status-failed d-none">
+                      <i class="bi bi-x"></i>
+                    </span>
+                    <span id="decision-default-2" class="status status-default">
+                      <i class="bi bi-question"></i>
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="label">
+                  Eigene Grenzen und Belastbarkeit
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-a">
+                    <input id="decision-3-a-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][3][a]" value="2">
+                    <label for="decision-3-a-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-3-a-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][3][a]" value="0" checked="checked">
+                    <label for="decision-3-a-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-3-a-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][3][a]" value="1">
+                    <label for="decision-3-a-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-b">
+                    <input id="decision-3-b-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][3][b]" value="2">
+                    <label for="decision-3-b-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-3-b-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][3][b]" value="0" checked="checked">
+                    <label for="decision-3-b-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-3-b-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][3][b]" value="1">
+                    <label for="decision-3-b-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-c">
+                    <input id="decision-3-c-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][3][c]" value="2">
+                    <label for="decision-3-c-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-3-c-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][3][c]" value="0" checked="checked">
+                    <label for="decision-3-c-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-3-c-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][3][c]" value="1">
+                    <label for="decision-3-c-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="result">
+                  <div class="decision-status">
+
+                    <span id="decision-passed-3" class="status status-passed d-none">
+                      <i class="bi bi-check"></i>
+                    </span>
+                    <span id="decision-failed-3" class="status status-failed d-none">
+                      <i class="bi bi-x"></i>
+                    </span>
+                    <span id="decision-default-3" class="status status-default">
+                      <i class="bi bi-question"></i>
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="label">
+                  Umgang mit Frustration
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-a">
+                    <input id="decision-4-a-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][4][a]" value="2">
+                    <label for="decision-4-a-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-4-a-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][4][a]" value="0" checked="checked">
+                    <label for="decision-4-a-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-4-a-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][4][a]" value="1">
+                    <label for="decision-4-a-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-b">
+                    <input id="decision-4-b-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][4][b]" value="2">
+                    <label for="decision-4-b-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-4-b-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][4][b]" value="0" checked="checked">
+                    <label for="decision-4-b-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-4-b-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][4][b]" value="1">
+                    <label for="decision-4-b-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-c">
+                    <input id="decision-4-c-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][4][c]" value="2">
+                    <label for="decision-4-c-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-4-c-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][4][c]" value="0" checked="checked">
+                    <label for="decision-4-c-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-4-c-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][4][c]" value="1">
+                    <label for="decision-4-c-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="result">
+                  <div class="decision-status">
+
+                    <span id="decision-passed-4" class="status status-passed d-none">
+                      <i class="bi bi-check"></i>
+                    </span>
+                    <span id="decision-failed-4" class="status status-failed d-none">
+                      <i class="bi bi-x"></i>
+                    </span>
+                    <span id="decision-default-4" class="status status-default">
+                      <i class="bi bi-question"></i>
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="label">
+                  Verhaltensweisen und -muster
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-a">
+                    <input id="decision-5-a-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][5][a]" value="2">
+                    <label for="decision-5-a-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-5-a-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][5][a]" value="0" checked="checked">
+                    <label for="decision-5-a-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-5-a-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][5][a]" value="1">
+                    <label for="decision-5-a-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-b">
+                    <input id="decision-5-b-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][5][b]" value="2">
+                    <label for="decision-5-b-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-5-b-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][5][b]" value="0" checked="checked">
+                    <label for="decision-5-b-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-5-b-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][5][b]" value="1">
+                    <label for="decision-5-b-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-c">
+                    <input id="decision-5-c-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][5][c]" value="2">
+                    <label for="decision-5-c-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-5-c-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][5][c]" value="0" checked="checked">
+                    <label for="decision-5-c-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-5-c-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][5][c]" value="1">
+                    <label for="decision-5-c-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="result">
+                  <div class="decision-status">
+
+                    <span id="decision-passed-5" class="status status-passed d-none">
+                      <i class="bi bi-check"></i>
+                    </span>
+                    <span id="decision-failed-5" class="status status-failed d-none">
+                      <i class="bi bi-x"></i>
+                    </span>
+                    <span id="decision-default-5" class="status status-default">
+                      <i class="bi bi-question"></i>
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="label">
+                  Einstellung und Werte
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-a">
+                    <input id="decision-6-a-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][6][a]" value="2">
+                    <label for="decision-6-a-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-6-a-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][6][a]" value="0" checked="checked">
+                    <label for="decision-6-a-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-6-a-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][6][a]" value="1">
+                    <label for="decision-6-a-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-b">
+                    <input id="decision-6-b-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][6][b]" value="2">
+                    <label for="decision-6-b-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-6-b-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][6][b]" value="0" checked="checked">
+                    <label for="decision-6-b-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-6-b-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][6][b]" value="1">
+                    <label for="decision-6-b-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-c">
+                    <input id="decision-6-c-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][6][c]" value="2">
+                    <label for="decision-6-c-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-6-c-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][6][c]" value="0" checked="checked">
+                    <label for="decision-6-c-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-6-c-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][6][c]" value="1">
+                    <label for="decision-6-c-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="result">
+                  <div class="decision-status">
+
+                    <span id="decision-passed-6" class="status status-passed d-none">
+                      <i class="bi bi-check"></i>
+                    </span>
+                    <span id="decision-failed-6" class="status status-failed d-none">
+                      <i class="bi bi-x"></i>
+                    </span>
+                    <span id="decision-default-6" class="status status-default">
+                      <i class="bi bi-question"></i>
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="label">
+                  Entscheidungsverhalten
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-a">
+                    <input id="decision-7-a-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][7][a]" value="2">
+                    <label for="decision-7-a-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-7-a-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][7][a]" value="0" checked="checked">
+                    <label for="decision-7-a-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-7-a-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][7][a]" value="1">
+                    <label for="decision-7-a-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-b">
+                    <input id="decision-7-b-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][7][b]" value="2">
+                    <label for="decision-7-b-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-7-b-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][7][b]" value="0" checked="checked">
+                    <label for="decision-7-b-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-7-b-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][7][b]" value="1">
+                    <label for="decision-7-b-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="input">
+                  <div class="decision-toggle decision-toggle-c">
+                    <input id="decision-7-c-failed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][7][c]" value="2">
+                    <label for="decision-7-c-failed" class="decision-toggle-item decision-toggle-item-left">
+                      <i class="bi bi-x"></i>
+                    </label>
+                    <input id="decision-7-c-default" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][7][c]" value="0" checked="checked">
+                    <label for="decision-7-c-default" class="decision-toggle-item decision-toggle-item-center">
+                      <i class="bi bi-dot"></i>
+                    </label>
+                    <input id="decision-7-c-passed" type="radio"
+                      name="tx_svfasfctocco_evaluatereservation[decision-form][7][c]" value="1">
+                    <label for="decision-7-c-passed" class="decision-toggle-item decision-toggle-item-right">
+                      <i class="bi bi-check"></i>
+                    </label>
+                    <span></span>
+                  </div>
+                </td>
+                <td class="result">
+                  <div class="decision-status">
+
+                    <span id="decision-passed-7" class="status status-passed d-none">
+                      <i class="bi bi-check"></i>
+                    </span>
+                    <span id="decision-failed-7" class="status status-failed d-none">
+                      <i class="bi bi-x"></i>
+                    </span>
+                    <span id="decision-default-7" class="status status-default">
+                      <i class="bi bi-question"></i>
+                    </span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4">Anzahl erfüllte Interaktionen</td>
+                <td class="total-point-result">
+                  <span id="score">0</span>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
         </div>
       </form>
+      <div class="mb-3 final-result-row">
+        <div class="section-title mb-4">
+          <h2 class="headline-medium">
+            Prüfungsentscheid
+          </h2>
+        </div>
+        <div>
+          <p id="status-default">Noch nicht bewertet</p>
+          <button id="status-button-passed" type="button" class="btn btn-success d-none">
+            Bestanden
+          </button>
+          <button id="status-button-failed" type="button" class="btn btn-danger d-none">
+            Nicht bestanden
+          </button>
+          <input id="decision-form-status" type="hidden"
+            name="tx_svfasfctocco_evaluatereservation[decision-form][decision][result]" value="0">
+        </div>
+
+        <div id="reason-text" class="pt-4 d-none">
+          <label for="decision-form-reason" class="form-label danger">
+            Begründung
+          </label>
+          <textarea rows="5" data-charlimitmin="180" data-charlimitmax="1200" id="decision-form-reason"
+            class="form-control charlimit" minlength="180" maxlength="1200"
+            name="tx_svfasfctocco_evaluatereservation[decision-form][decision][reason]"></textarea>
+          <div class="char-limit-text mt-2" style="display: block;">
+            Mind. <span class="char-limit-min red-bold">180</span> Zeichen /
+            Max. <span class="char-limit-max">1200</span> verbleibende Zeichen
+          </div>
+        </div>
+        <div class="mt-3">
+          <button id="saveBtn" type="submit" class="btn btn-primary" disabled>Speichern</button>
+        </div>
+      </div>
     </div>
   </div>
   <script type="module" src="/src/main.js"></script>
