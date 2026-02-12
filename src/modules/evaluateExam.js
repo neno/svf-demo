@@ -3,7 +3,8 @@ let minScoreToPass = 3
 
 const examProps = {
    score: 0,
-   result: 'default', // "default", "passed", "failed"
+   result: 'failed', // "passed" or "failed" (no default state)
+   evaluatedCount: 0, // number of rows that have been evaluated (passed or failed)
    rowStatuses: [], // "failed", "default", or "passed" per row
 }
 
@@ -33,31 +34,31 @@ const exam = new Proxy(examProps, {
 // evaluate each row's status and compute overall result
 function evaluateExam() {
    let score = 0
-   let hasFailed = false
+   let evaluatedCount = 0
    const statuses = []
 
    for (let row = 0; row < decisionMatrix.length; row++) {
       if (decisionMatrix[row].every(col => col === 2)) {
          // every column failed → row is failed
          statuses.push('failed')
-         hasFailed = true
+         evaluatedCount += 1
       } else if (decisionMatrix[row].every(col => col === 1)) {
          // all columns passed → row is passed
          statuses.push('passed')
          score += 1
+         evaluatedCount += 1
       } else {
          statuses.push('default')
       }
    }
 
    exam.score = score
+   exam.evaluatedCount = evaluatedCount
 
    if (exam.score >= minScoreToPass) {
       exam.result = 'passed'
-   } else if (hasFailed) {
-      exam.result = 'failed'
    } else {
-      exam.result = 'default'
+      exam.result = 'failed'
    }
    exam.rowStatuses = statuses
 }

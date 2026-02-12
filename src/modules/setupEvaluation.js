@@ -22,14 +22,14 @@ function updateRowStatuses(rowStatuses, iconIdPrefix) {
 
 
 function updateResultStatuses(result, resultDefaultEl, resultPassedEl, resultFailedEl, resultInputEl, resultFailedExplanationEl) {
-   const inputValueMap = { default: 0, passed: 1, failed: 2 }
+   const inputValueMap = { passed: 1, failed: 2 }
 
-   resultDefaultEl?.classList.toggle('d-none', result !== 'default')
+   resultDefaultEl?.classList.add('d-none') // default status no longer exists
    resultPassedEl?.classList.toggle('d-none', result !== 'passed')
    resultFailedEl?.classList.toggle('d-none', result !== 'failed')
    resultFailedExplanationEl?.classList.toggle('d-none', result !== 'failed')
 
-   if (resultInputEl) resultInputEl.value = inputValueMap[result] ?? 0
+   if (resultInputEl) resultInputEl.value = inputValueMap[result] ?? 2
 }
 
 function isFailedExplanationValid(textareaEl) {
@@ -38,7 +38,7 @@ function isFailedExplanationValid(textareaEl) {
    return length > 180 && length <= 1200
 }
 
-function setSubmitButtonState(submitButtonEl, result, failedExplanationTextareaEl) {
+function setSubmitButtonState(submitButtonEl, result, failedExplanationTextareaEl, evaluatedCount) {
    if (!submitButtonEl) return
 
    submitButtonEl.disabled = true
@@ -46,7 +46,7 @@ function setSubmitButtonState(submitButtonEl, result, failedExplanationTextareaE
    if (result === 'passed') {
       submitButtonEl.disabled = false
    }
-   if (result === 'failed' && isFailedExplanationValid(failedExplanationTextareaEl)) {
+   if (result === 'failed' && evaluatedCount >= 2 && isFailedExplanationValid(failedExplanationTextareaEl)) {
       submitButtonEl.disabled = false
    }
 }
@@ -69,7 +69,8 @@ function setupEvaluation({
    }
 
    submitButtonEl.disabled = true // disable submit button initially
-   let result = 'default'
+   let result = 'failed'
+   let evaluatedCount = 0
 
    // Subscribe FIRST so we receive events from the initial evaluation
    subscribeExam((key, value, state) => {
@@ -83,9 +84,13 @@ function setupEvaluation({
       if (key === 'rowStatuses') {
          updateRowStatuses(value, iconIdPrefix)
       }
+      if (key === 'evaluatedCount') {
+         evaluatedCount = state.evaluatedCount
+         setSubmitButtonState(submitButtonEl, result, failedExplanationTextareaEl, evaluatedCount)
+      }
       if (key === 'result' && submitButtonEl) {
          result = state.result
-         setSubmitButtonState(submitButtonEl, state.result, failedExplanationTextareaEl)
+         setSubmitButtonState(submitButtonEl, state.result, failedExplanationTextareaEl, evaluatedCount)
       }
    })
 
@@ -96,7 +101,7 @@ function setupEvaluation({
    // re-evaluate submit button when the failed explanation textarea changes
    if (failedExplanationTextareaEl) {
       failedExplanationTextareaEl.addEventListener('input', () => {
-         setSubmitButtonState(submitButtonEl, result, failedExplanationTextareaEl)
+         setSubmitButtonState(submitButtonEl, result, failedExplanationTextareaEl, evaluatedCount)
       })
    }
 }
