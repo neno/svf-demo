@@ -35,7 +35,7 @@ function updateResultStatuses(result, resultDefaultEl, resultPassedEl, resultFai
 function isFailedExplanationValid(textareaEl) {
    if (!textareaEl) return false
    const length = textareaEl.value.length
-   return length > 180 && length <= 1200
+   return length >= 180 && length <= 1200
 }
 
 function setSubmitButtonState(submitButtonEl, result, failedExplanationTextareaEl, evaluatedCount) {
