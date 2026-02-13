@@ -38,7 +38,7 @@ function isFailedExplanationValid(textareaEl) {
    return length >= 180 && length <= 1200
 }
 
-function setSubmitButtonState(submitButtonEl, result, failedExplanationTextareaEl, evaluatedCount) {
+function setSubmitButtonState(submitButtonEl, result, failedExplanationTextareaEl) {
    if (!submitButtonEl) return
 
    submitButtonEl.disabled = true
@@ -46,7 +46,7 @@ function setSubmitButtonState(submitButtonEl, result, failedExplanationTextareaE
    if (result === 'passed') {
       submitButtonEl.disabled = false
    }
-   if (result === 'failed' && evaluatedCount >= 2 && isFailedExplanationValid(failedExplanationTextareaEl)) {
+   if (result === 'failed' && isFailedExplanationValid(failedExplanationTextareaEl)) {
       submitButtonEl.disabled = false
    }
 }
@@ -70,7 +70,6 @@ function setupEvaluation({
 
    submitButtonEl.disabled = true // disable submit button initially
    let result = 'failed'
-   let evaluatedCount = 0
 
    // Subscribe FIRST so we receive events from the initial evaluation
    subscribeExam((key, value, state) => {
@@ -84,13 +83,9 @@ function setupEvaluation({
       if (key === 'rowStatuses') {
          updateRowStatuses(value, iconIdPrefix)
       }
-      if (key === 'evaluatedCount') {
-         evaluatedCount = state.evaluatedCount
-         setSubmitButtonState(submitButtonEl, result, failedExplanationTextareaEl, evaluatedCount)
-      }
       if (key === 'result' && submitButtonEl) {
          result = state.result
-         setSubmitButtonState(submitButtonEl, state.result, failedExplanationTextareaEl, evaluatedCount)
+         setSubmitButtonState(submitButtonEl, state.result, failedExplanationTextareaEl)
       }
    })
 
@@ -101,7 +96,7 @@ function setupEvaluation({
    // re-evaluate submit button when the failed explanation textarea changes
    if (failedExplanationTextareaEl) {
       failedExplanationTextareaEl.addEventListener('input', () => {
-         setSubmitButtonState(submitButtonEl, result, failedExplanationTextareaEl, evaluatedCount)
+         setSubmitButtonState(submitButtonEl, result, failedExplanationTextareaEl)
       })
    }
 }
