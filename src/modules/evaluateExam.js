@@ -36,15 +36,16 @@ function evaluateExam() {
    const statuses = []
 
    for (let row = 0; row < decisionMatrix.length; row++) {
-      if (decisionMatrix[row].some(col => col === 2)) {
-         // any column failed → entire row is failed
-         statuses.push('failed')
-      } else if (decisionMatrix[row].every(col => col === 1)) {
+      if (decisionMatrix[row].every(col => col === 1)) {
          // all columns passed → row is passed
          statuses.push('passed')
          score += 1
-      } else {
+      } else if (decisionMatrix[row].some(col => col === 0)) {
+         // at least one column still at default → row is not yet decided
          statuses.push('default')
+      } else {
+         // all columns evaluated, at least one failed → row is failed
+         statuses.push('failed')
       }
    }
 
